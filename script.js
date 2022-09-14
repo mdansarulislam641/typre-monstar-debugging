@@ -12,17 +12,17 @@ let startTime;
 let questionText = "";
 
 // Load and display question
-   fetch("./texts.json")
+   fetch('./texts.json')
   .then(res => res.json())
   .then(data => {
     questionText = data[Math.floor(Math.random() * data.length)];
     question.innerHTML = questionText;
-  });
+  })
 
 // checks the user typed character and displays accordingly
 const typeController = (e) => {
   const newLetter = e.key;
-  console.log(newLetter)
+  // console.log(newLetter)
 
   // Handle backspace press
   if (newLetter == "Backspace") {
@@ -47,6 +47,8 @@ const typeController = (e) => {
     display.innerHTML += `<span class="green">${newLetter === " " ? "▪" : newLetter}</span>`;
   } else {
     display.innerHTML += `<span class="red">${newLetter === " " ? "▪" : newLetter}</span>`;
+    errorCount += newLetter.length;
+    console.log(errorCount)
   }
 
   // check if given question text is equal to user typed text
@@ -81,12 +83,12 @@ const gameOver = () => {
   // show result
   resultModal.innerHTML += `
     <h1>Finished!</h1>
-    <p>You took: <span class="bold">${timeTaken}</span> seconds</p>
+    <p>You took: <span class="bold">${parseInt(timeTaken)}</span> seconds</p>
     <p>You made <span class="bold red">${errorCount}</span> mistakes</p>
     <button onclick="closeModal()">Close</button>
   `;
 
-  addHistory(questionText, timeTaken, errorCount);
+  displayHistory(questionText, timeTaken, errorCount);
 
   // restart everything
   startTime = null;
@@ -104,7 +106,7 @@ const start = () => {
   // If already started, do not start again
   if (startTime) return;
 
-  let count = 3;
+  let count = 0;
   countdownOverlay.style.display = "flex";
 
   const startCountdown = setInterval(() => {
@@ -126,7 +128,7 @@ const start = () => {
 };
 
 // START Countdown
-startBtn.addEventListener("click", start());
+startBtn.addEventListener("click", start);
 
 // If history exists, show it
 displayHistory();
@@ -135,7 +137,8 @@ displayHistory();
 setInterval(() => {
   const currentTime = new Date().getTime();
   const timeSpent = (currentTime - startTime) / 1000;
+  console.log(parseInt(timeSpent))
 
 
-  document.getElementById("show-time").innerHTML = `${startTime ? timeSpent : 0} seconds`;
+  document.getElementById("show-time").innerHTML = `${startTime ? parseInt(timeSpent) : 0} seconds`;
 }, 1000);
