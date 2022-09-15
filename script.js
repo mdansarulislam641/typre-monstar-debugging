@@ -14,10 +14,8 @@ let questionText = "";
 // Load and display question
    fetch('./texts.json')
   .then(res => res.json())
-  .then(data => {
-    questionText = data[Math.floor(Math.random() * data.length)];
-    question.innerHTML = questionText;
-  })
+  .then(data => { questionText = data[Math.floor(Math.random() * data.length)];
+  question.innerHTML = questionText});
 
 // checks the user typed character and displays accordingly
 const typeController = (e) => {
@@ -104,13 +102,10 @@ const closeModal = () => {
 const start = () => {
   // If already started, do not start again
   if (startTime) return;
-
   let count = 3;
   countdownOverlay.style.display = "flex";
-
   const startCountdown = setInterval(() => {
     countdownOverlay.innerHTML = `<h1>${count}</h1>`;
-
     // finished timer
     if (count === 0) {
       // -------------- START TYPING -----------------
@@ -136,7 +131,7 @@ displayHistory();
 setInterval(() => {
   const currentTime = new Date().getTime();
   const timeSpent = (currentTime - startTime) / 1000;
-  console.log(parseInt(timeSpent))
+  // console.log(parseInt(timeSpent))
 
 
   document.getElementById("show-time").innerHTML = `${startTime ? parseInt(timeSpent) : 0} seconds`;
