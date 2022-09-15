@@ -20,7 +20,6 @@ function addHistory(questionText, timeTaken, errorCount) {
 
   displayHistory();
 }
-
 function displayHistory() {
   histories.innerHTML = "";
   const previousTests = JSON.parse(localStorage.getItem("testHistory")) || [];
